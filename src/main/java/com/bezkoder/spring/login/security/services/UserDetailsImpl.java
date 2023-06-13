@@ -24,15 +24,27 @@ public class UserDetailsImpl implements UserDetails {
   @JsonIgnore
   private String password;
 
+  private String phoneNumber;
+
+  private String shippingAddress;
+
+  private String name;
+
+  private String lastName;
+
   private Collection<? extends GrantedAuthority> authorities;
 
   public UserDetailsImpl(Long id, String username, String email, String password,
-      Collection<? extends GrantedAuthority> authorities) {
+      Collection<? extends GrantedAuthority> authorities, String phoneNumber, String shippingAddress, String name, String lastName) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
     this.authorities = authorities;
+    this.phoneNumber = phoneNumber;
+    this.shippingAddress = shippingAddress;
+    this.name = name;
+    this.lastName = lastName;
   }
 
   public static UserDetailsImpl build(User user) {
@@ -44,13 +56,36 @@ public class UserDetailsImpl implements UserDetails {
         user.getId(), 
         user.getUsername(), 
         user.getEmail(),
-        user.getPassword(), 
-        authorities);
+        user.getPassword(),
+        authorities,
+        user.getPhoneNumber(),
+        user.getShippingAddress(),
+        user.getName(),
+        user.getLastName()
+    );
   }
+
+
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return authorities;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 
   public Long getId() {
@@ -60,6 +95,24 @@ public class UserDetailsImpl implements UserDetails {
   public String getEmail() {
     return email;
   }
+
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getShippingAddress() {
+    return shippingAddress;
+  }
+
+  public void setShippingAddress(String shippingAddress) {
+    this.shippingAddress = shippingAddress;
+  }
+
 
   @Override
   public String getPassword() {

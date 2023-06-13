@@ -33,18 +33,66 @@ public class User {
   private String password;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "user_roles", 
+  @JoinTable(name = "user_roles",
              joinColumns = @JoinColumn(name = "user_id"),
              inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
+  @Size(max = 10)
+  private String phoneNumber;
+
+  @Size(max = 255)
+  private String shippingAddress;
+
+  @Size(max=100)
+  private String name;
+  @Size(max=100)
+  @Column(name="lastname")
+  private String lastName;
+
   public User() {
   }
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String password, String shippingAddress, String phoneNumber, String name, String lastName) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.shippingAddress = shippingAddress;
+    this.phoneNumber = phoneNumber;
+    this.name = name;
+    this.lastName = lastName;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getShippingAddress() {
+    return shippingAddress;
+  }
+
+  public void setShippingAddress(String shippingAddress) {
+    this.shippingAddress = shippingAddress;
   }
 
   public Long getId() {
