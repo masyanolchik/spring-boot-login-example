@@ -12,7 +12,7 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.AUTO,generator="native")
     @GenericGenerator(name = "native",strategy = "native")
     @Column(name="id")
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
     @JoinTable(
@@ -32,11 +32,11 @@ public class ProductImage {
         imageSrc = fileName;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,10 +62,5 @@ public class ProductImage {
         if (!(o instanceof ProductImage)) return false;
         ProductImage that = (ProductImage) o;
         return id == that.id && Objects.equals(product, that.product) && Objects.equals(imageSrc, that.imageSrc);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, product, imageSrc);
     }
 }

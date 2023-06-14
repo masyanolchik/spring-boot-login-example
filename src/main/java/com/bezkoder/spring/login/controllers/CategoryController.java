@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -47,10 +44,14 @@ public class CategoryController {
                      attributeResponseSet
                 ));
             }
+            CategoryResponse parentCategory = null;
+            if(sourceCategory.getParentCategory() != null) {
+                parentCategory = getCategoryById(sourceCategory.getParentCategory().getId());
+            }
             categoryResponseList.add(new CategoryResponse(
                     Math.toIntExact(sourceCategory.getId()),
                     sourceCategory.getName(),
-                    sourceCategory.getParentCategory(),
+                    parentCategory,
                     attributeGroupResponseSet
             ));
         }
@@ -66,5 +67,37 @@ public class CategoryController {
             }
         }
         return categories;
+    }
+
+    private CategoryResponse getCategoryById(Long id) {
+        CategoryResponse categoryResponse = null;
+        if(id != null) {
+            Optional<Category> category = categoryRepository.findById(id);
+            if(category.isPresent()) {
+                CategoryResponse parentCategory = getCategoryById(category.get().getParentCategoryId());
+                Set<AttributeGroupResponse> attributeGroupSet = new HashSet<>();
+                for (AttributeGroup attributeGroup: category.get().getAttributeGroups()) {
+                    Set<AttributeResponse> attributes = new HashSet<>();
+                    for (Attribute attr: attributeGroup.getAttributes()) {
+                        attributes.add(new AttributeResponse(
+                                Math.toIntExact(attr.getId()),
+                                attr.getName()
+                        ));
+                    }
+                    attributeGroupSet.add(new AttributeGroupResponse(
+                            Math.toIntExact(attributeGroup.getId()),
+                            attributeGroup.getName(),
+                            attributes
+                    ));
+                }
+                categoryResponse = new CategoryResponse(
+                        Math.toIntExact(category.get().getId()),
+                        category.get().getName(),
+                        parentCategory,
+                        attributeGroupSet
+                );
+            }
+        }
+        return categoryResponse;
     }
 }

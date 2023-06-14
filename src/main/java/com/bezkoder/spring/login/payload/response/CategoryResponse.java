@@ -8,10 +8,10 @@ import java.util.Set;
 public class CategoryResponse {
     private int id;
     private String name;
-    private Category parentCategory;
+    private CategoryResponse parentCategory;
     private Set<AttributeGroupResponse> attributeGroups;
 
-    public CategoryResponse(int id, String name, Category parentCategory, Set<AttributeGroupResponse> attributeGroups) {
+    public CategoryResponse(int id, String name, CategoryResponse parentCategory, Set<AttributeGroupResponse> attributeGroups) {
         this.id = id;
         this.name = name;
         this.parentCategory = parentCategory;
@@ -26,7 +26,7 @@ public class CategoryResponse {
         return name;
     }
 
-    public Category getParentCategory() {
+    public CategoryResponse getParentCategory() {
         return parentCategory;
     }
 

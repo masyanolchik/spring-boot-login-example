@@ -72,6 +72,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .antMatchers("/Users/maxymshaposhnyk/IdeaProjects/dyplom/product_pics/**").permitAll()
         .antMatchers("/api/promo/**").permitAll()
         .antMatchers("/api/category/**").permitAll()
+        .antMatchers("/api/product/**").permitAll()
         .anyRequest().authenticated();
     
     http.authenticationProvider(authenticationProvider());

@@ -11,18 +11,18 @@ public class ProductStatus {
     @GeneratedValue(strategy = GenerationType.AUTO,generator="native")
     @GenericGenerator(name = "native",strategy = "native")
     @Column(name="id")
-    private int id;
+    private Long id;
 
     @Column(name="status_text")
     private String statusText;
 
     public ProductStatus(){}
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
